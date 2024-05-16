@@ -20,21 +20,17 @@ function puzzleparse(filename::String)::Dict{Int64, MyPuzzleRecordModel}
      -
     open(filename, "r") do io
         for line ∈ eachline(io)
-            # Trim the line to remove any leading/trailing whitespace
-            trimmed_line = strip(line)
             
-            # Create a MyPuzzleRecordModel instance for the current line
-            model = build(trimmed_line) 
-            
-            # Add the model to the dictionary with the current line number as the key
-            records[linecounter] = model
+            # process the data lines -
+            records[linecounter] = _build(MyPuzzleRecordModel, line);
             
             # Increment
             linecounter += 1
         end
     end
 
-    return records
+    # return the header and the records -
+    return records;
 end
 
 # ===== PUBLIC METHODS ABOVE HERE ==================================================================================== #
